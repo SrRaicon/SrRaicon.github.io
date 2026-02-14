@@ -1,143 +1,356 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Love Forever</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    /* --- Base page --- */
-    body {
-      background: #000;
-      height: 100vh;
-      margin: 0;
-      overflow: hidden;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Moonlight | Valentine's Dedication</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;1,300&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (via CDN for single file portability) -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    /* --- Quick links (translated) --- */
-    .quick-link {
-      position: fixed;
-      right: 10px;
-      width: 35px;
-      height: 35px;
-      z-index: 999;
-      background: #696969;
-      border-radius: 50%;
-      padding: 1px;
-      text-align: center;
-      color: #ddd;
-      text-decoration: none;
-      line-height: 35px;
-      font-size: 13px;
-      user-select: none;
-    }
-    .quick-link:nth-of-type(1) { top: 10%; }  /* Create */
-    .quick-link:nth-of-type(2) { top: 4%;  z-index: 998; }  /* More */
-    .quick-link:nth-of-type(3) { top: 16%; z-index: 997; }  /* Source Code */
-    .quick-link:nth-of-type(4) { top: 22%; z-index: 996; }  /* Gift */
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-    /* --- Love words --- */
-    #ui .love {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      margin: -225px 0 0 -225px;
-      /* per-item delay via CSS variable --i (1..N) */
-      --i: 1;
-    }
-    #ui .love:last-child .love_word {
-      color: #fff;
-      font-size: 2rem;
-      text-shadow: 0 0 10px #ea80b0;
-    }
-    /* Make the last item match the others */
-#ui .love:last-child .love_word {
-  color: #ea80b0;
-  font-size: 1.4rem;
-  text-shadow: 0 0 10px #fff;
-}
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        moon: {
+                            900: '#0B1026', // Deepest midnight
+                            800: '#1B2446',
+                            700: '#2C3A68',
+                            400: '#6B85C1',
+                            100: '#E2E8F0',
+                            50: '#F8FAFC', // Starlight
+                        },
+                        gold: {
+                            400: '#FCD34D',
+                            500: '#F59E0B',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'twinkle': 'twinkle 3s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        twinkle: {
+                            '0%': { opacity: '0.3', transform: 'scale(0.8)' },
+                            '100%': { opacity: '1', transform: 'scale(1.2)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 
-    #ui .love_word {
-      color: #ea80b0;
-      font-size: 1.4rem;
-      transform: translateY(-100%) rotateZ(-30deg);
-      text-shadow: 0 0 10px #fff;
-      letter-spacing: 2px;
-      white-space: nowrap;
-    }
-    #ui .love_horizontal {
-      animation: horizontal 10000ms infinite alternate ease-in-out;
-      animation-delay: calc(var(--i) * -300ms);
-    }
-    #ui .love_vertical {
-      animation: vertical 20000ms infinite linear;
-      animation-delay: calc(var(--i) * -300ms);
-    }
+    <style>
+        /* Custom Styles for Magical Effects */
+        body {
+            background: radial-gradient(circle at top center, #1B2446 0%, #0B1026 100%);
+            color: #F8FAFC;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
 
-    /* --- Animations (unchanged) --- */
-    @keyframes horizontal {
-      from { transform: translateX(0px); }
-      to   { transform: translateX(450px); }
-    }
-    @keyframes vertical {
-      0%   { transform: translateY(180px); }
-      10%  { transform: translateY(45px); }
-      15%  { transform: translateY(4.5px); }
-      18%  { transform: translateY(0px); }
-      20%  { transform: translateY(4.5px); }
-      22%  { transform: translateY(34.61538px); }
-      24%  { transform: translateY(64.28571px); }
-      25%  { transform: translateY(112.5px); }
-      26%  { transform: translateY(64.28571px); }
-      28%  { transform: translateY(34.61538px); }
-      30%  { transform: translateY(4.5px); }
-      32%  { transform: translateY(0px); }
-      35%  { transform: translateY(4.5px); }
-      40%  { transform: translateY(45px); }
-      50%  { transform: translateY(180px); }
-      71%  { transform: translateY(428.57143px); }
-      72.5%{ transform: translateY(441.17647px); }
-      75%  { transform: translateY(450px); }
-      77.5%{ transform: translateY(441.17647px); }
-      79%  { transform: translateY(428.57143px); }
-      100% { transform: translateY(180px); }
-    }
-  </style>
+        /* Starry Background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, #ffffff, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            opacity: 0.3;
+            animation: twinkle 5s infinite;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-nav {
+            background: rgba(11, 16, 38, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Moon Glow Effect */
+        .moon-glow {
+            box-shadow: 0 0 60px 20px rgba(107, 133, 193, 0.2);
+        }
+
+        /* Custom Selection Color */
+        ::selection {
+            background: #6B85C1;
+            color: white;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B1026;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2C3A68;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475a8f;
+        }
+    </style>
 </head>
-<body>
-  <!-- Translated quick links (you can keep or remove the URLs) -->
-  <a href="https://mp.weixin.qq.com/s/oxLqXBcLCT8ij67DjkW2kw" class="quick-link" title="Create">Create</a>
-  <a href="https://shop1619956412.v.weidian.com/?userid=1619956412&spider_token=2720" class="quick-link" title="More">More</a>
-  <a href="https://pan.quark.cn/s/3344d23e48a8" class="quick-link" title="Source Code">Code</a>
-  <a href="https://shop1619956412.v.weidian.com/?userid=1619956412&spider_token=2720" class="quick-link" title="Gift">Gift</a>
+<body class="antialiased">
 
-  <div id="ui"></div>
+    <!-- Ambient Stars Background -->
+    <div class="stars"></div>
 
-  <script>
-    // Create N floating “I love you” items (was multilingual; now all English)
-    const N = 100;     // adjust if you want fewer/more
-    const ui = document.getElementById('ui');
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-2xl font-bold tracking-wider text-white flex items-center gap-2">
+                        <i data-lucide="moon" class="text-moon-400 fill-current w-6 h-6"></i>
+                        MOONLIGHT
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#hero" class="text-moon-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Inicio</a>
+                        <a href="#letter" class="text-moon-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Carta</a>
+                        <a href="#reasons" class="text-moon-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Razones</a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i data-lucide="menu" class="w-8 h-8"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden glass bg-moon-900 absolute w-full border-t border-gray-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#hero" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Inicio</a>
+                <a href="#letter" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Carta</a>
+                <a href="#reasons" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Razones</a>
+            </div>
+        </div>
+    </nav>
 
-    for (let i = 1; i <= N; i++) {
-      const love = document.createElement('div');
-      love.className = 'love';
-      love.style.setProperty('--i', i);
+    <!-- Hero Section -->
+    <header id="hero" class="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
+        <!-- Decorative Glow behind text -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-moon-400 rounded-full blur-[120px] opacity-20 animate-pulse-slow"></div>
 
-      const h = document.createElement('div');
-      h.className = 'love_horizontal';
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+            <p class="text-moon-400 font-medium tracking-[0.3em] uppercase mb-4 animate-fade-in-up">Para ti</p>
+            <h1 class="text-6xl md:text-8xl font-bold text-white mb-4 tracking-tight leading-tight animate-float">
+                My <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">Moonlight</span>
+            </h1>
+            
+            <p class="text-2xl md:text-3xl text-moon-100 font-light tracking-wide mb-6 animate-fade-in-up" style="animation-delay: 0.3s;">
+                Ronnie, el inicio de nuestro viaje
+            </p>
 
-      const v = document.createElement('div');
-      v.className = 'love_vertical';
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-moon-100 font-light font-serif italic mb-10 opacity-90">
+                "En la inmensidad de mi universo, tú eres la luz que guía mis noches más oscuras."
+            </p>
+            <a href="#letter" class="group relative inline-flex items-center justify-center px-8 py-4 text-base font-medium text-white transition-all duration-200 bg-moon-700/30 border border-moon-400/50 rounded-full hover:bg-moon-700/50 hover:shadow-[0_0_20px_rgba(107,133,193,0.4)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-moon-400 focus:ring-offset-moon-900">
+                <span class="mr-2">Leer dedicatoria</span>
+                <i data-lucide="arrow-down" class="w-4 h-4 group-hover:translate-y-1 transition-transform"></i>
+            </a>
+        </div>
+    </header>
 
-      const word = document.createElement('div');
-      word.className = 'love_word';
-      word.textContent = 'I love you';
+    <!-- Section 1: The Blog Letter -->
+    <section id="letter" class="py-24 relative z-10">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="glass rounded-2xl p-8 md:p-12 shadow-2xl moon-glow transform transition hover:-translate-y-1 duration-500">
+                <div class="flex items-center justify-between mb-8 border-b border-white/10 pb-4">
+                    <span class="text-moon-400 text-sm font-sans tracking-wider uppercase">14 de Febrero, 2026</span>
+                    <i data-lucide="heart" class="w-5 h-5 text-red-400 fill-current"></i>
+                </div>
+                
+                <article class="prose prose-invert prose-lg mx-auto font-serif">
+                    <h2 class="font-sans text-3xl font-bold text-white mb-6">Querida Alma Gemela,</h2>
+                    
+                    <p class="text-moon-100 leading-relaxed mb-6">
+                        A veces me pregunto cómo es posible que una sola persona pueda cambiar tanto el mundo de alguien. Antes de ti, mis días eran comunes, pero ahora cada momento tiene un brillo diferente, como si la luna siempre estuviera llena iluminando mi camino.
+                    </p>
+                    
+                    <p class="text-moon-100 leading-relaxed mb-6">
+                        Este pequeño espacio digital es solo un intento de capturar lo inmenso que siento por ti. No hay código suficiente para programar la lógica de mi corazón cuando te veo, ni CSS capaz de estilizar la belleza que traes a mi vida.
+                    </p>
+                    
+                    <blockquote class="border-l-4 border-moon-400 pl-4 italic text-white my-8 bg-moon-800/30 p-4 rounded-r-lg">
+                        "Te amaría en cualquier forma, en cualquier mundo, con cualquier pasado."
+                    </blockquote>
 
-      v.appendChild(word);
-      h.appendChild(v);
-      love.appendChild(h);
-      ui.appendChild(love);
-    }
-  </script>
+                    <p class="text-moon-100 leading-relaxed">
+                        Gracias por ser mi paz, mi locura y, sobre todo, mi luz de luna.
+                    </p>
+                    
+                    <div class="mt-8 pt-8 border-t border-white/10 flex items-center justify-end">
+                        <span class="font-handwriting text-xl text-moon-400" style="font-family: cursive;">Con todo mi amor</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Cards / Reasons (Grid) -->
+    <section id="reasons" class="py-24 bg-moon-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Fragmentos de Luz</h2>
+                <div class="w-24 h-1 bg-moon-400 mx-auto rounded-full"></div>
+                <p class="mt-4 text-moon-100 max-w-2xl mx-auto">Pequeñas razones por las que iluminas mi mundo.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="glass p-8 rounded-xl hover:bg-white/5 transition-all duration-300 group cursor-default">
+                    <div class="w-12 h-12 bg-moon-800 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="smile" class="text-moon-400 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Tu Sonrisa</h3>
+                    <p class="text-moon-100 text-sm leading-relaxed">
+                        Esa capacidad que tienes de cambiar mi mal humor en segundos con solo un gesto. Es mi curva favorita en el universo.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass p-8 rounded-xl hover:bg-white/5 transition-all duration-300 group cursor-default">
+                    <div class="w-12 h-12 bg-moon-800 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="music" class="text-moon-400 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Tu Voz</h3>
+                    <p class="text-moon-100 text-sm leading-relaxed">
+                        Escucharte es mi melodía favorita. Me da calma, me da hogar, sin importar dónde estemos físicamente.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass p-8 rounded-xl hover:bg-white/5 transition-all duration-300 group cursor-default">
+                    <div class="w-12 h-12 bg-moon-800 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="star" class="text-moon-400 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Tu Apoyo</h3>
+                    <p class="text-moon-100 text-sm leading-relaxed">
+                        Porque crees en mí incluso cuando yo dudo. Eres el impulso que necesito para alcanzar las estrellas.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Button / Surprise -->
+    <section class="py-20 text-center relative overflow-hidden">
+        <div class="relative z-10">
+            <h2 class="text-2xl text-white font-light mb-8">¿Listo para nuestro próximo capítulo?</h2>
+            <button onclick="toggleHeart()" class="bg-white text-moon-900 px-8 py-3 rounded-full font-bold hover:bg-moon-100 hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                Te Amo
+            </button>
+            <div id="love-message" class="hidden mt-8 text-pink-300 text-xl font-serif animate-bounce">
+                ❤️ Infinitamente ❤️
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="glass-nav py-8 mt-12 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-moon-400 text-sm">
+                Hecho con <i data-lucide="code" class="inline w-3 h-3 mx-1"></i> y mucho <i data-lucide="heart" class="inline w-3 h-3 text-red-500 mx-1"></i> para ti.
+            </p>
+            <p class="text-xs text-gray-500 mt-2">Happy Valentine's Day © 2026</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Simple interaction for the button
+        function toggleHeart() {
+            const msg = document.getElementById('love-message');
+            msg.classList.remove('hidden');
+            
+            // Create a small confetti effect (simple JS implementation)
+            for(let i=0; i<30; i++) {
+                createParticle();
+            }
+        }
+
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.position = 'fixed';
+            particle.style.left = Math.random() * window.innerWidth + 'px';
+            particle.style.top = window.innerHeight + 'px'; // Start from bottom
+            particle.style.width = '8px';
+            particle.style.height = '8px';
+            particle.style.backgroundColor = Math.random() > 0.5 ? '#F472B6' : '#6B85C1';
+            particle.style.borderRadius = '50%';
+            particle.style.pointerEvents = 'none';
+            particle.style.zIndex = '100';
+            particle.style.transition = 'all 2s ease-out';
+            
+            document.body.appendChild(particle);
+
+            // Animate
+            setTimeout(() => {
+                particle.style.top = (window.innerHeight / 2) + (Math.random() * 200 - 100) + 'px';
+                particle.style.opacity = '0';
+            }, 50);
+
+            // Cleanup
+            setTimeout(() => {
+                particle.remove();
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
+
+
